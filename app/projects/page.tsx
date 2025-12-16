@@ -38,9 +38,9 @@ export default function ProjectsPage(){
               anonymous, secure file hosting with a focus on privacy and speed.
             </p>
             <div className="flex gap-2 pt-2">
-              <span className="text-xs px-2 py-1 bg-neutral-900 text-neutral-400 rounded">network</span>
-              <span className="text-xs px-2 py-1 bg-neutral-900 text-neutral-400 rounded">proxy</span>
-              <span className="text-xs px-2 py-1 bg-neutral-900 text-neutral-400 rounded">minecraft</span>
+              <span className="text-xs px-2 py-1 bg-neutral-900 text-neutral-400 rounded">files</span>
+              <span className="text-xs px-2 py-1 bg-neutral-900 text-neutral-400 rounded">security</span>
+              <span className="text-xs px-2 py-1 bg-neutral-900 text-neutral-400 rounded">hosting</span>
             </div>
           </motion.div>
 
