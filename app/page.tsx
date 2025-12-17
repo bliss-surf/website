@@ -3,7 +3,9 @@
 import {JetBrains_Mono} from "next/font/google"
 import {motion} from "framer-motion"
 import Aurora from './Aurora';
-import { useState, useEffect } from 'react';
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
+import PersonCard from '@/components/PersonCard';
 
 const poppins=JetBrains_Mono({subsets:["latin"],weight:["400","600","700"]})
 
@@ -19,68 +21,9 @@ export default function Page(){
         />
       </div>
       <div className="flex flex-col items-center justify-between min-h-screen px-4 sm:px-8 md:px-12 lg:px-20 py-8 sm:py-12 md:py-16 lg:py-20 relative z-10">
-        <motion.header 
-          className="space-y-4 sm:space-y-6 max-w-4xl text-left flex-1 flex flex-col justify-center w-full"
-          initial={{opacity: 0, y: -20}}
-          animate={{opacity: 1, y: 0}}
-          transition={{duration: 0.4, ease: "easeInOut"}}
-        >
-          <h1 className="text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-bold" style={{color: "#7f85fb"}}>bliss.</h1>
-          <p className="text-sm sm:text-base md:text-lg lg:text-xl text-neutral-400 leading-relaxed">
-            crafting modern web experiences.<br />
-            check out our <a href="projects" className="underline hover:text-[#6b75db] transition-colors duration-200">projects</a>
-          </p>
-        </motion.header>
+        <Header />
 
-        <motion.section 
-          className="absolute bottom-6 sm:bottom-8 md:bottom-10 left-4 sm:left-6 md:left-10 flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6 md:gap-8"
-          initial={{opacity: 0, x: -50}}
-          animate={{opacity: 1, x: 0}}
-          transition={{duration: 0.4, delay: 0.2, ease: "easeInOut"}}
-        >
-          <div className="flex items-center gap-2">
-            <svg width="16" height="16" viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg" className="sm:w-5 sm:h-5">
-              <defs>
-                <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0%" stopColor="#9395FF"/>
-                  <stop offset="100%" stopColor="#7679FF"/>
-                </linearGradient>
-              </defs>
-              <rect width="160" height="160" rx="32" fill="#0B0B10"/>
-              <g fill="none" stroke="url(#g)" strokeWidth="10" strokeLinecap="round">
-                <path d="M40 90c20 20 60 20 80 0"/>
-                <path d="M40 70c20-20 60-20 80 0" opacity="0.6"/>
-              </g>
-            </svg>
-            <div className="text-xs sm:text-sm text-neutral-500">2025 bliss.surf™</div>
-          </div>
-          <div className="flex gap-2 sm:gap-3">
-            <a 
-              href="https://discord.gg/surfer" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="text-xs sm:text-sm text-neutral-400 hover:text-[#6b75db] underline transition-colors duration-200"
-            >
-              discord
-            </a>
-            <a 
-              href="https://x.com/blissdotsurf" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="text-xs sm:text-sm text-neutral-400 hover:text-[#6b75db] underline transition-colors duration-200"
-            >
-              twitter
-            </a>
-            <a 
-              href="https://github.com/bliss-surf" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="text-xs sm:text-sm text-neutral-400 hover:text-[#6b75db] underline transition-colors duration-200"
-            >
-              github
-            </a>
-          </div>
-        </motion.section>
+        <Footer />
 
         <motion.section 
           className="absolute bottom-6 sm:bottom-8 md:bottom-10 right-4 sm:right-8 md:right-12 lg:right-20 flex gap-4 sm:gap-6 md:gap-8"
@@ -88,60 +31,9 @@ export default function Page(){
           animate={{opacity: 1, x: 0}}
           transition={{duration: 0.4, delay: 0.1, ease: "easeInOut"}}
         >
-          <Person name="lucian" id="120088896561217536"/>
+          <PersonCard name="lucian" id="120088896561217536"/>
         </motion.section>
       </div>
     </main>
-  )
-}
-
-function Person({name,id}:{name:string,id:string}){
-  const [roleIndex, setRoleIndex] = useState(0)
-  const roles = ["owner", "head developer"]
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setRoleIndex((prev) => (prev + 1) % roles.length)
-    }, 3000)
-    return () => clearInterval(interval)
-  }, [])
-
-  return(
-    <motion.div 
-      className="flex items-center gap-2 sm:gap-3"
-      initial={{opacity: 0, scale: 0.8}}
-      animate={{opacity: 1, scale: 1}}
-      transition={{duration: 0.3, ease: "easeInOut"}}
-      whileHover={{scale: 1.05, transition: {duration: 0.15}}}
-    >
-      <motion.img
-        src={`https://api.lanyard.rest/${id}.png`}
-        className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl"
-        whileHover={{scale: 1.15, rotate: 5}}
-        transition={{duration: 0.15, ease: "easeInOut"}}
-      />
-      <div className="leading-tight">
-        <motion.p 
-          className="font-medium text-xs sm:text-sm"
-          initial={{color: "#ffffff"}}
-          whileHover={{color: "#736cd6"}}
-          transition={{duration: 0.15, ease: "easeInOut"}}
-        >
-          {name}
-        </motion.p>
-        <div className="h-5 overflow-hidden w-24 sm:w-28">
-          <motion.div
-            key={roleIndex}
-            initial={{y: 20, opacity: 0}}
-            animate={{y: 0, opacity: 1}}
-            exit={{y: -20, opacity: 0}}
-            transition={{duration: 0.3, ease: "easeInOut"}}
-            className="text-xs text-neutral-500"
-          >
-            {roles[roleIndex]}
-          </motion.div>
-        </div>
-      </div>
-    </motion.div>
   )
 }
