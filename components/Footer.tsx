@@ -12,7 +12,7 @@ function StatusIndicator() {
   useEffect(() => {
     const fetchStatus = async () => {
       try {
-        const response = await fetch("https://status.bliss.surf/status")
+        const response = await fetch("/api/status")
         const data: StatusData = await response.json()
         setStatus(data.bliss_surf_website?.ok ?? false)
       } catch {
