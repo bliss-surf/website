@@ -1,4 +1,58 @@
 import {motion} from "framer-motion"
+import { useEffect, useState } from "react"
+
+interface StatusData {
+  bliss_surf_website?: { ok: boolean; responseTime: number }
+}
+
+function StatusIndicator() {
+  const [status, setStatus] = useState<boolean | null>(null)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const fetchStatus = async () => {
+      try {
+        const response = await fetch("https://status.bliss.surf/status")
+        const data: StatusData = await response.json()
+        setStatus(data.bliss_surf_website?.ok ?? false)
+      } catch {
+        setStatus(false)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchStatus()
+    const interval = setInterval(fetchStatus, 30000)
+    return () => clearInterval(interval)
+  }, [])
+
+  return (
+    <a
+      href="https://status.bliss.surf/"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity"
+    >
+      {loading ? (
+        <div className="w-2 h-2 bg-neutral-700 rounded-full animate-pulse" />
+      ) : (
+        <div
+          className={`w-2 h-2 rounded-full transition-colors ${
+            status ? "bg-green-500" : "bg-red-500"
+          }`}
+        />
+      )}
+      {loading ? (
+        <div className="w-20 h-3 bg-neutral-800 rounded animate-pulse" />
+      ) : (
+        <span className="text-xs sm:text-sm text-neutral-500">
+          {status ? "operational" : "offline"}
+        </span>
+      )}
+    </a>
+  )
+}
 
 export default function Footer(){
   return(
@@ -24,7 +78,9 @@ export default function Footer(){
         </svg>
         <div className="text-xs sm:text-sm text-neutral-500">2025 bliss.surf™</div>
       </div>
-      <div className="flex gap-2 sm:gap-3">
+      <div className="flex gap-3 sm:gap-4 items-center">
+        <StatusIndicator />
+        <div className="hidden sm:block w-px h-3 bg-neutral-800" />
         <a 
           href="https://discord.gg/surfer" 
           target="_blank" 
