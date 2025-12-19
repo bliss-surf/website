@@ -42,7 +42,7 @@ export default function PersonCard({name,id}:{name:string,id:string}){
         whileHover={{scale: 1.05, transition: {duration: 0.15}}}
       >
         <motion.img
-          src={`https://api.lanyard.rest/${id}.png`}
+          src={`https://discord.bliss.surf/avatar/${id}`}
           className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl cursor-pointer"
           whileHover={{scale: 1.15, rotate: 5}}
           transition={{duration: 0.15, ease: "easeInOut"}}
@@ -117,7 +117,7 @@ export default function PersonCard({name,id}:{name:string,id:string}){
             >
               <div className="flex items-center justify-between gap-4 mb-4">
                 <motion.img
-                  src={`https://api.lanyard.rest/${id}.png`}
+                  src={`https://discord.bliss.surf/avatar/${id}`}
                   className="w-14 h-14 rounded-lg flex-shrink-0"
                   whileHover={{scale: 1.05}}
                   transition={{duration: 0.2}}
