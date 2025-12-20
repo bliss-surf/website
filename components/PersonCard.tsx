@@ -7,6 +7,7 @@ export default function PersonCard({name,id}:{name:string,id:string}){
   const [roleIndex, setRoleIndex] = useState(0)
   const [showModal, setShowModal] = useState(false)
   const [currentTime, setCurrentTime] = useState("")
+  const [timeAgo, setTimeAgo] = useState("")
   const roles = ["owner", "head developer"]
 
   useEffect(() => {
@@ -18,7 +19,9 @@ export default function PersonCard({name,id}:{name:string,id:string}){
 
   useEffect(() => {
     const updateTime = () => {
-      const warsawTime = new Date().toLocaleString("en-US", {
+      const now = new Date()
+      
+      const warsawTime = now.toLocaleString("en-US", {
         timeZone: "Europe/Warsaw",
         hour: "2-digit",
         minute: "2-digit",
@@ -26,6 +29,18 @@ export default function PersonCard({name,id}:{name:string,id:string}){
         hour12: false,
       })
       setCurrentTime(warsawTime)
+      
+      const birthDate = new Date("2008-05-04T13:39:00+02:00")
+      const diff = now.getTime() - birthDate.getTime()
+      
+      const years = Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25))
+      const months = Math.floor((diff % (1000 * 60 * 60 * 24 * 365.25)) / (1000 * 60 * 60 * 24 * 30.44))
+      const days = Math.floor((diff % (1000 * 60 * 60 * 24 * 30.44)) / (1000 * 60 * 60 * 24))
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000)
+      
+      setTimeAgo(`${years}y ${months}m ${days}d ${hours}h ${minutes}m ${seconds}s`)
     }
     updateTime()
     const interval = setInterval(updateTime, 1000)
@@ -128,6 +143,7 @@ export default function PersonCard({name,id}:{name:string,id:string}){
                   </h2>
                   <p className="text-xs text-neutral-400 mt-0.5">founder @ bliss</p>
                   <p className="text-xs text-neutral-500 mt-1">Warsaw • {currentTime}</p>
+                  <p className="text-xs text-neutral-500 mt-0.5">{timeAgo} ago</p>
                 </div>
                 <motion.button
                   onClick={() => setShowModal(false)}
